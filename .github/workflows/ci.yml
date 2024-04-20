@@ -1,0 +1,25 @@
+name: Testing with devbox
+
+on: push
+
+defaults:
+  run:
+    shell: bash
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout the repository
+        uses: actions/checkout@v4
+
+      - name: Install Devbox
+        uses: jetify-com/devbox-install-action@v0.9.0
+        with:
+          enable-cache: true
+
+      - name: Run test
+        run: |
+          devbox run -- gem install rails
+          devbox run -- bundle install
+          devbox run -- rake task
